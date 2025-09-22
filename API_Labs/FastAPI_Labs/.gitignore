@@ -1,0 +1,4 @@
+fastapi_lab1_env/
+*.log
+*.env
+*.tmp

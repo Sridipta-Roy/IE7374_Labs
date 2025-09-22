@@ -18,8 +18,8 @@ class IrisData(BaseModel):
 
 class IrisResponse(BaseModel):
     prediction: str
-    confidence: float
-    all_probabilities: Dict[str, float]
+    probability: float
+    class_probabilities: Dict[str, float]
 
 class BatchIrisData(BaseModel):
     samples: List[IrisData]
@@ -37,7 +37,7 @@ async def health_check():
     Health check endpoint to verify API is running.
     """
     return HealthResponse(
-        status="healthy",
+        status="OK",
         message="Iris Classification API is running"
     )
 
@@ -47,7 +47,7 @@ async def root():
     Root endpoint - redirects to health check.
     """
     return HealthResponse(
-        status="healthy",
+        status="OK",
         message="Iris Classification API is running"
     )
 
@@ -60,7 +60,7 @@ async def predict_iris(iris_features: IrisData):
         iris_features: IrisData containing sepal and petal measurements
         
     Returns:
-        IrisResponse with prediction, confidence, and all probabilities
+        IrisResponse with prediction, overall probability, and class probabilities
     """
     try:
         # Convert input to numpy array format expected by predict_data
@@ -76,8 +76,8 @@ async def predict_iris(iris_features: IrisData):
         
         return IrisResponse(
             prediction=prediction_result["prediction"],
-            confidence=prediction_result["confidence"],
-            all_probabilities=prediction_result["all_probabilities"]
+            probability=prediction_result["probability"],
+            class_probabilities=prediction_result["class_probabilities"]
         )
    
     except Exception as e:
@@ -118,8 +118,8 @@ async def predict_iris_batch(batch_data: BatchIrisData):
         for result in batch_results:
             predictions.append(IrisResponse(
                 prediction=result["prediction"],
-                confidence=result["confidence"],
-                all_probabilities=result["all_probabilities"]
+                probability=result["probability"],
+                class_probabilities=result["class_probabilities"]
             ))
         
         return BatchIrisResponse(predictions=predictions)
@@ -145,7 +145,7 @@ async def get_model_info():
             "petal_width"
         ],
         "classes": ["setosa", "versicolor", "virginica"],
-        "description": "Iris species classification model trained on the famous Iris dataset"
+        "description": "Iris species classification model trained on the Iris dataset"
     }
     
 

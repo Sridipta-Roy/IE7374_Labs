@@ -34,8 +34,8 @@ def predict_data(X):
         
         return {
             "prediction": predicted_class,
-            "confidence": round(confidence, 2),
-            "all_probabilities": all_probabilities
+            "probability": round(confidence, 2),
+            "class_probabilities": all_probabilities
         }
     
     # For batch predictions
@@ -53,8 +53,8 @@ def predict_data(X):
             
             results.append({
                 "prediction": predicted_class,
-                "confidence": round(confidence, 2),
-                "all_probabilities": all_probabilities
+                "probability": round(confidence, 2),
+                "class_probabilities": all_probabilities
             })
         
         return results
