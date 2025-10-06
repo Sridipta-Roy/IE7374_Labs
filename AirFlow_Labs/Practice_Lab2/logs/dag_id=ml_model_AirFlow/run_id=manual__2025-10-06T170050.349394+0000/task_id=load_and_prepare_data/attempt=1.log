@@ -1,0 +1,19 @@
+{"timestamp":"2025-10-06T17:00:55.878401Z","level":"info","event":"DAG bundles loaded: dags-folder","logger":"airflow.dag_processing.bundles.manager.DagBundlesManager","filename":"manager.py","lineno":179}
+{"timestamp":"2025-10-06T17:00:55.887494Z","level":"info","event":"Filling up the DagBag from /opt/airflow/dags/dag_pipeline.py","logger":"airflow.models.dagbag.DagBag","filename":"dagbag.py","lineno":593}
+{"timestamp":"2025-10-06T17:01:04.698968Z","level":"info","event":"✓ Dataset loaded successfully from /opt/airflow/dags/data/iris.csv","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.700054Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.701049Z","level":"info","event":"Dataset Info:","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.701479Z","level":"info","event":"Total samples: 150","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.701868Z","level":"info","event":"Features: ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.702292Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.702685Z","level":"info","event":"Class distribution:","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.706739Z","level":"info","event":"species","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.707391Z","level":"info","event":"Setosa        50","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.707857Z","level":"info","event":"Versicolor    50","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.708295Z","level":"info","event":"Virginica     50","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.708676Z","level":"info","event":"Name: count, dtype: int64","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.739860Z","level":"info","event":"","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.740579Z","level":"info","event":"✓ Data prepared: 120 training samples, 30 test samples","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.741305Z","level":"info","event":"✓ Class distribution - Train: [40 40 40], Test: [10 10 10]","logger":"task.stdout"}
+{"timestamp":"2025-10-06T17:01:04.740658Z","level":"info","event":"Done. Returned value was: data_ready","logger":"airflow.task.operators.airflow.providers.standard.decorators.python._PythonDecoratedOperator","filename":"python.py","lineno":218}
+{"timestamp":"2025-10-06T17:01:04.741265Z","level":"info","event":"Pushing xcom","ti":"RuntimeTaskInstance(id=UUID('0199ba77-ff9b-79ec-a2ae-b28270d0ac1a'), task_id='load_and_prepare_data', dag_id='ml_model_AirFlow', run_id='manual__2025-10-06T17:00:50.349394+00:00', try_number=1, dag_version_id=UUID('0199ba67-6c97-756c-afd2-2bef7164578c'), map_index=-1, hostname='aba7ec31dfd6', context_carrier={}, task=<Task(_PythonDecoratedOperator): load_and_prepare_data>, bundle_instance=LocalDagBundle(name=dags-folder), max_tries=0, start_date=datetime.datetime(2025, 10, 6, 17, 0, 54, 143110, tzinfo=datetime.timezone.utc), end_date=None, state=<TaskInstanceState.RUNNING: 'running'>, is_mapped=False, rendered_map_index=None)","logger":"task","filename":"task_runner.py","lineno":1352}

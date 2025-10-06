@@ -1,0 +1,28 @@
+{
+  "model_name": "GradientBoosting",
+  "accuracy": 0.9666666666666667,
+  "timestamp": "2025-10-06T17:01:37.763366",
+  "all_metrics": [
+    {
+      "recall": 0.9,
+      "accuracy": 0.9,
+      "f1_score": 0.8997493734335839,
+      "precision": 0.9023569023569024,
+      "model_name": "RandomForest"
+    },
+    {
+      "recall": 0.9666666666666667,
+      "accuracy": 0.9666666666666667,
+      "f1_score": 0.9665831244778613,
+      "precision": 0.9696969696969696,
+      "model_name": "GradientBoosting"
+    },
+    {
+      "recall": 0.9333333333333333,
+      "accuracy": 0.9333333333333333,
+      "f1_score": 0.9333333333333333,
+      "precision": 0.9333333333333333,
+      "model_name": "LogisticRegression"
+    }
+  ]
+}
