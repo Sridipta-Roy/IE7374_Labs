@@ -41,4 +41,4 @@ jobs:
 
       - name: Train and save model # Train the model and save it to Google Cloud Storage
         run: |
-          python GitHub_with_GCP/Lab1/train_and_save_model.py # Run the script to train the model and save it
+          python GitHub_with_GCP/Lab1/train_model.py # Run the script to train the model and save it
