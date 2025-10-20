@@ -1,15 +1,17 @@
-import pandas as pd
 from unittest.mock import patch
-from data_pipeline.data_fetcher import fetch_data
+import pandas as pd
 
 @patch("data_pipeline.data_fetcher.fetch_data")
 def test_fetch_data_shape(mock_fetch):
-    # Provide a fake DataFrame instead of real GCP/data call
+    # Return mock data
     mock_fetch.return_value = pd.DataFrame({
-        "species": ["setosa", "virginica"],
+        "species": ["setosa", "versicolor"],
         "value": [1, 2]
     })
 
+    # Call the function AFTER mocking
+    from data_pipeline.data_fetcher import fetch_data
     df = fetch_data()
+
     assert df.shape[0] > 0
     assert "species" in df.columns
