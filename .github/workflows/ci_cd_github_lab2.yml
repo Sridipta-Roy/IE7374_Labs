@@ -73,4 +73,4 @@ jobs:
             --platform managed \
             --allow-unauthenticated \
             --port 8080 \
-            --set-env-vars PORT=8080,MODEL_LOCAL_PATH=trained_models/model-latest.joblib,GCP_BUCKET=${{ env.GCP_BUCKET }},GCP_FILE_PATH=${{ env.GCP_FILE_PATH }}
+            --set-env-vars MODEL_LOCAL_PATH=trained_models/model-latest.joblib,GCP_BUCKET=${{ env.GCP_BUCKET }},GCP_FILE_PATH=${{ env.GCP_FILE_PATH }}
