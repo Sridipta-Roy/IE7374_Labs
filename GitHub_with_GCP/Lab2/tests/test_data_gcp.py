@@ -9,6 +9,7 @@ def test_fetch_data_from_gcp(mock_fetch):
         "col2": [30, 40]
     })
 
+    # Import after patching
     from data_pipeline.data_fetcher import fetch_data
     df = fetch_data()
 

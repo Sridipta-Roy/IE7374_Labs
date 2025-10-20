@@ -9,7 +9,7 @@ def test_fetch_data_shape(mock_fetch):
         "value": [1, 2]
     })
 
-    # Call the function AFTER mocking
+    # Import after patching
     from data_pipeline.data_fetcher import fetch_data
     df = fetch_data()
 
