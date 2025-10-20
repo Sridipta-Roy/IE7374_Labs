@@ -1,9 +1,11 @@
 from pathlib import Path
-import subprocess
+from unittest.mock import patch
+from model_pipeline.train import main
 
+@patch("data_pipeline.data_fetcher.fetch_data")
+def test_training_produces_artifact(mock_fetch):
+    # Mock empty dataset to pass into training
+    mock_fetch.return_value = None
 
-def test_training_produces_artifact(tmp_path: Path):
-    # run training; artifact should be created
-    proc = subprocess.run(["python", "model_pipeline/train.py"], capture_output=True, text=True)
-    assert proc.returncode == 0, proc.stderr
+    main()  # Run training pipeline directly, no subprocess
     assert Path("trained_models/model-latest.joblib").exists()

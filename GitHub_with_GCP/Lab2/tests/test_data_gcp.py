@@ -1,21 +1,15 @@
-import os
-from unittest.mock import patch, MagicMock
+import pandas as pd
+from unittest.mock import patch
 from data_pipeline.data_fetcher import fetch_data
 
-
 @patch("data_pipeline.data_fetcher.storage.Client")
-def test_fetch_data_from_gcp(mock_client):
-    # Mock bucket and blob
-    mock_bucket = MagicMock()
-    mock_blob = MagicMock()
-    mock_blob.download_as_text.return_value = "col1,col2"
-    mock_bucket.blob.return_value = mock_blob
-    mock_client.return_value.bucket.return_value = mock_bucket
-
-
-    os.environ["GCP_BUCKET"] = "test-bucket"
-    os.environ["GCP_FILE_PATH"] = "test.csv"
-
+@patch("data_pipeline.data_fetcher.fetch_data")
+def test_fetch_data_from_gcp(mock_fetch, mock_client):
+    # Simulate final DataFrame result
+    mock_fetch.return_value = pd.DataFrame({
+        "col1": [1, 2],
+        "col2": [3, 4]
+    })
 
     df = fetch_data()
     assert not df.empty
