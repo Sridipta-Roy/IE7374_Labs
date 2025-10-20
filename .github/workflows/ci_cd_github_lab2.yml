@@ -37,11 +37,6 @@ jobs:
       - name: Unit tests
         run: pytest
 
-      - name: Train model (produce artifact)
-        run: |
-          python -m model_pipeline.train | tee train.log
-          echo "MODEL_VERSION=$(grep -Eo 'trained_version=[0-9]+' train.log | cut -d'=' -f2)" >> $GITHUB_ENV
-
       - name: Google Auth
         uses: google-github-actions/auth@v2
         with:
@@ -51,6 +46,11 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           version: '>= 471.0.0'
+
+      - name: Train model (produce artifact)
+        run: |
+          python -m model_pipeline.train | tee train.log
+          echo "MODEL_VERSION=$(grep -Eo 'trained_version=[0-9]+' train.log | cut -d'=' -f2)" >> $GITHUB_ENV      
 
       - name: Configure Docker to use Artifact Registry
         run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
