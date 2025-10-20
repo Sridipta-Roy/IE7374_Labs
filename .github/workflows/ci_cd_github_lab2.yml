@@ -1,0 +1,77 @@
+name: CI/CD – Train → Build → Deploy (Cloud Run)
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.11"
+  REGION: "us-east1"
+  SERVICE_NAME: "mlops-lab-api"
+  REPOSITORY_NAME: "mlops-lab-repo"
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+  GCP_BUCKET: ${{ secrets.GCP_BUCKET }}
+  GCP_FILE_PATH: ${{ secrets.GCP_FILE_PATH }}
+
+jobs:
+  build-test-train-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint
+        run: flake8
+
+      - name: Unit tests
+        run: pytest
+
+      - name: Train model (produce artifact)
+        run: |
+          python -m model_pipeline.train | tee train.log
+          echo "MODEL_VERSION=$(grep -Eo 'trained_version=[0-9]+' train.log | cut -d'=' -f2)" >> $GITHUB_ENV
+
+      - name: Google Auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          version: '>= 471.0.0'
+
+      - name: Configure Docker to use Artifact Registry
+        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: Build & Push Docker image
+        env:
+          IMAGE_URI: ${{ env.REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.SERVICE_NAME }}
+        run: |
+          docker build -t ${IMAGE_URI}:${{ env.MODEL_VERSION }} -t ${IMAGE_URI}:latest .
+          docker push ${IMAGE_URI}:${{ env.MODEL_VERSION }}
+          docker push ${IMAGE_URI}:latest
+
+      - name: Deploy to Cloud Run
+        env:
+          IMAGE_URI: ${{ env.REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.REPOSITORY_NAME }}/${{ env.SERVICE_NAME }}:latest
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image ${IMAGE_URI} \
+            --region ${{ env.REGION }} \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8080 \
+            --set-env-vars PORT=8080,MODEL_LOCAL_PATH=trained_models/model-latest.joblib,GCP_BUCKET=${{ env.GCP_BUCKET }},GCP_FILE_PATH=${{ env.GCP_FILE_PATH }}
