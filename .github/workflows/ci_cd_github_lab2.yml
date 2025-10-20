@@ -17,7 +17,9 @@ env:
 jobs:
   build-test-train-deploy:
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: GitHub_with_GCP/Lab2/
     steps:
       - name: Checkout
         uses: actions/checkout@v4
