@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/sridi/Documents/NE/Fall%202025/MLOps_Coursework/IE7374_Labs/MLFlow_Labs/Lab1/mlruns/420729034224694516/f2e5d3f2308e4d51aac3bb16df908cc6/artifacts
+end_time: 1762191291422
+entry_point_name: ''
+experiment_id: '420729034224694516'
+lifecycle_stage: active
+run_id: f2e5d3f2308e4d51aac3bb16df908cc6
+run_name: selective-cat-688
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762191289656
+status: 3
+tags: []
+user_id: sridi

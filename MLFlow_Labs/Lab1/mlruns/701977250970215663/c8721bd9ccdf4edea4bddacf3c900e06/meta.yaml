@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/sridi/Documents/NE/Fall%202025/MLOps_Coursework/IE7374_Labs/MLFlow_Labs/Lab1/mlruns/701977250970215663/c8721bd9ccdf4edea4bddacf3c900e06/artifacts
+end_time: 1762192052027
+entry_point_name: ''
+experiment_id: '701977250970215663'
+lifecycle_stage: active
+run_id: c8721bd9ccdf4edea4bddacf3c900e06
+run_name: One Sentence Summary
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1762192051294
+status: 3
+tags: []
+user_id: sridi

@@ -1,0 +1,32 @@
+{
+    "id": "chatcmpl-b0da8e41-86b5-4ca3-acab-50cac0c161b6",
+    "choices": [
+        {
+            "finish_reason": "stop",
+            "index": 0,
+            "logprobs": null,
+            "message": {
+                "content": "The article tells the story of India, a land rich in history and diversity, from its ancient civilizations to its modern-day status as the world's largest democracy. It highlights the country's contributions to human thought and innovation, its vibrant cultural heritage, and its struggle for independence, ultimately portraying India as a complex and dynamic nation where tradition and progress coexist.",
+                "role": "assistant"
+            }
+        }
+    ],
+    "created": 1762192052,
+    "model": "llama-3.3-70b-versatile",
+    "object": "chat.completion",
+    "system_fingerprint": "fp_55062f05af",
+    "usage": {
+        "completion_tokens": 72,
+        "prompt_tokens": 397,
+        "total_tokens": 469,
+        "completion_time": 0.246712667,
+        "prompt_time": 0.097993891,
+        "queue_time": 0.073394166,
+        "total_time": 0.344706558
+    },
+    "usage_breakdown": null,
+    "x_groq": {
+        "id": "req_01k95d9m6cezmaf6makw4ax6by"
+    },
+    "service_tier": "on_demand"
+}
