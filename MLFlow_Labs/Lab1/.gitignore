@@ -10,7 +10,7 @@ env/
 ml_venv/
 
 # MLFlow runs
-#mlruns/
+mlruns/
 
 # Environment and config files
 .env
