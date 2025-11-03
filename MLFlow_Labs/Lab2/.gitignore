@@ -1,0 +1,32 @@
+# Python bytecode and cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+env/
+.ml_env/
+ml_venv/
+
+# MLFlow runs
+mlruns/
+data/
+
+# Environment and config files
+.env
+*.env
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# VSCode settings
+.vscode/
+
+# macOS system files
+.DS_Store
