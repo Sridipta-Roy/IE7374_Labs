@@ -97,7 +97,7 @@ CONFIGS = {
     ),
     
     "quality": RAGConfig(
-        llm_model="llama-3.1-70b-versatile",
+        llm_model="llama-3.3-70b-versatile",
         chunk_size=600,
         retriever_k=5,
         embeddings_model="sentence-transformers/all-mpnet-base-v2",
