@@ -1,0 +1,60 @@
+# DVC Pipeline Configuration
+
+stages:
+  data_preprocessing:
+    cmd: python data_preprocessing.py
+    deps:
+      - data_preprocessing.py
+    params:
+      - data.test_size
+      - data.random_state
+    outs:
+      - data/raw/wine_data.csv
+      - data/processed/train.csv
+      - data/processed/test.csv
+
+  feature_engineering:
+    cmd: python feature_engineering.py
+    deps:
+      - feature_engineering.py
+      - data/processed/train.csv
+      - data/processed/test.csv
+    outs:
+      - data/features/train_features.csv
+      - data/features/test_features.csv
+      - models/artifacts/scaler.pkl
+
+  train_model:
+    cmd: python train_model.py
+    deps:
+      - train_model.py
+      - data/features/train_features.csv
+      - data/features/test_features.csv
+    params:
+      - model.n_estimators
+      - model.max_depth
+      - model.random_state
+    outs:
+      - models/model.pkl
+    metrics:
+      - metrics/train_metrics.json:
+          cache: false
+      - metrics/test_metrics.json:
+          cache: false
+
+  evaluate_model:
+    cmd: python evaluate_model.py
+    deps:
+      - evaluate_model.py
+      - models/model.pkl
+      - data/features/test_features.csv
+    outs:
+      - plots/confusion_matrix.png
+      - plots/roc_curve.png
+      - plots/feature_importance.png
+      - plots/prediction_distribution.png
+    metrics:
+      - metrics/classification_report.json:
+          cache: false
+      - metrics/feature_importance.csv:
+          cache: false

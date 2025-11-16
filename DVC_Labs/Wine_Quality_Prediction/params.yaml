@@ -1,0 +1,13 @@
+data:
+  test_size: 0.2
+  random_state: 42
+
+# model:
+#   n_estimators: 100
+#   max_depth: 10
+#   random_state: 42
+
+model:
+  n_estimators: 200    # Trying different values
+  max_depth: 15        # Trying different depths
+  random_state: 42

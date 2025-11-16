@@ -1,0 +1,8 @@
+[cache]
+    type = copy
+    dir = C:\dvc-cache
+[core]
+    remote = myremote
+['remote "myremote"']
+    url = s3://dvc-storage-wine-dataset/
+    profile = dvc-profile
