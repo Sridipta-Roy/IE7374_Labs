@@ -1,0 +1,50 @@
+experiments:
+  - name: "baseline_model"
+    model_type: "logistic_regression"
+    hyperparameters:
+      max_iter: 1000
+      random_state: 42
+    description: "Baseline logistic regression model"
+
+  - name: "random_forest_default"
+    model_type: "random_forest"
+    hyperparameters:
+      n_estimators: 100
+      max_depth: null
+      random_state: 42
+    description: "Random forest with default parameters"
+
+  - name: "random_forest_tuned"
+    model_type: "random_forest"
+    hyperparameters:
+      n_estimators: 200
+      max_depth: 10
+      min_samples_split: 5
+      random_state: 42
+    description: "Tuned random forest model"
+
+  - name: "gradient_boosting"
+    model_type: "gradient_boosting"
+    hyperparameters:
+      n_estimators: 100
+      learning_rate: 0.1
+      max_depth: 3
+      random_state: 42
+    description: "Gradient boosting classifier"
+
+  - name: "svm_model"
+    model_type: "svm"
+    hyperparameters:
+      kernel: "rbf"
+      C: 1.0
+      random_state: 42
+    description: "Support vector machine classifier"
+
+  - name: "neural_network"
+    model_type: "neural_network"
+    hyperparameters:
+      hidden_layers: [64, 32]
+      epochs: 50
+      batch_size: 32
+      learning_rate: 0.001
+    description: "Simple neural network with 2 hidden layers"

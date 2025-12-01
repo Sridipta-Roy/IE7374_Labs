@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.11.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"      
+    ports:
+      - "9200:9200"      
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data      
+    networks:
+      - mlops-elk
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.11.0
+    container_name: logstash
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5001:5001/tcp"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx512m -Xms512m"
+    networks:
+      - mlops-elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.11.0
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      SERVER_NAME: kibana
+      SERVER_HOST: "0.0.0.0"
+    networks:
+      - mlops-elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5601/api/status || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.11.0
+    container_name: filebeat
+    user: root
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./training_pipeline/logs:/var/log/mlops:ro
+      - filebeat_data:/usr/share/filebeat/data
+    networks:
+      - mlops-elk
+    depends_on:
+      - elasticsearch
+      - logstash
+    command: filebeat -e -strict.perms=false
+
+  training_pipeline:
+    build:
+      context: ./training_pipeline
+      dockerfile: Dockerfile
+    container_name: training_pipeline
+    volumes:
+      - ./training_pipeline:/app
+      - ./training_pipeline/logs:/app/logs
+      - training_models:/app/models
+    networks:
+      - mlops-elk
+    depends_on:
+      logstash:
+        condition: service_started
+    environment:
+      - LOGSTASH_HOST=logstash
+      - ELASTICSEARCH_HOST=http://elasticsearch:9200
+    command: python run_experiments.py
+
+networks:
+  mlops-elk:
+    driver: bridge
+
+volumes:
+  elasticsearch_data:
+    driver: local
+  filebeat_data:
+    driver: local
+  training_models:
+    driver: local

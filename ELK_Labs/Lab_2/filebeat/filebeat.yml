@@ -1,0 +1,25 @@
+filebeat.inputs:
+  - type: log
+    enabled: true
+    paths:
+      - /var/log/mlops/*.log
+    json.keys_under_root: true
+    json.add_error_key: true
+    fields:
+      log_type: file
+    fields_under_root: true
+
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  index: "mlops-logs-%{+yyyy.MM.dd}"
+
+setup.template.name: "mlops-logs"
+setup.template.pattern: "mlops-logs-*"
+
+logging.level: info
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
