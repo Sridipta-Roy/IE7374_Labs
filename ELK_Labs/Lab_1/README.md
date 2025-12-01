@@ -29,13 +29,6 @@ This MLOps project demonstrate a real-time machine learning model performance mo
 5. Go to Analytics → Visualize library; create visualizations and dashboard
 ![KIBANA DASHBOARD](images/Dashboard_Kibana.png)
 
-## Sample Queries
-
-- Total predictions: Count of documents
-- Accuracy rate: Average of `prediction_correct`
-- Average confidence: Average of `confidence`
-- Inference time: Average of `inference_time_ms`
-
 ## Stopping the Stack
 ```
 docker-compose down
